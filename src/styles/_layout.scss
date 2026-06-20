@@ -1,0 +1,27 @@
+@use 'variables' as *;
+
+#app {
+  max-width: $max-content-width;
+  margin: 0 auto;
+  padding: $space-lg $space-md $space-xl;
+}
+
+.page-header {
+  margin-bottom: $space-lg;
+
+  &__title {
+    font-size: $font-size-xl;
+    color: $color-primary-dark;
+  }
+
+  &__subtitle {
+    margin: $space-xs 0 0;
+    color: $color-text-muted;
+  }
+}
+
+.page-main {
+  display: flex;
+  flex-direction: column;
+  gap: $space-lg;
+}

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2213%22 font-size=%2214%22>🛒</text></svg>"
+    />
+    <title>Cosibella Products — katalog produktów</title>
+  </head>
+  <body>
+    <div id="app">
+      <header class="page-header">
+        <h1 class="page-header__title">Cosibella Products</h1>
+        <p class="page-header__subtitle">
+          Przeglądaj, filtruj i sprawdzaj szczegóły produktów.
+        </p>
+      </header>
+
+      <main class="page-main">
+        <div class="table-wrapper">
+          <table id="product-table" class="product-table">
+            <thead>
+              <tr>
+                <th scope="col">Nazwa</th>
+                <th scope="col">Kategoria</th>
+                <th scope="col">Cena</th>
+              </tr>
+            </thead>
+            <tbody id="product-table-body"></tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
