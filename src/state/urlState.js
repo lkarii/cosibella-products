@@ -1,3 +1,5 @@
+const VALID_VIEWS = ['table', 'gallery'];
+
 function parseNumberParam(value) {
   if (value === null) return null;
   const parsed = parseFloat(value);
@@ -14,19 +16,23 @@ export function parseUrlState() {
   const pageParam = Number(params.get('page'));
   const page = Number.isInteger(pageParam) && pageParam > 0 ? pageParam : 1;
 
-  return { filters: { category, minPrice, maxPrice }, page };
+  const viewParam = params.get('view');
+  const view = VALID_VIEWS.includes(viewParam) ? viewParam : null;
+
+  return { filters: { category, minPrice, maxPrice }, page, view };
 }
 
 export function validateCategory(category, validCategories) {
   return validCategories.includes(category) ? category : '';
 }
 
-export function syncUrl(filters, page, { push = false } = {}) {
+export function syncUrl(filters, page, view, { push = false } = {}) {
   const params = new URLSearchParams();
   if (filters.category) params.set('category', filters.category);
   if (filters.minPrice != null) params.set('minPrice', filters.minPrice);
   if (filters.maxPrice != null) params.set('maxPrice', filters.maxPrice);
   if (page > 1) params.set('page', String(page));
+  if (view) params.set('view', view);
 
   const query = params.toString();
   const newUrl = query ? `${location.pathname}?${query}` : location.pathname;

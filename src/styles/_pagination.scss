@@ -44,5 +44,11 @@
     border-color: $color-primary;
     color: white;
     font-weight: 600;
+
+    &:hover:not(:disabled) {
+      background: $color-primary-dark;
+      border-color: $color-primary-dark;
+      color: white;
+    }
   }
 }

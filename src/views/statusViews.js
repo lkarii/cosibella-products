@@ -3,7 +3,7 @@ let errorBannerEl;
 let errorMessageEl;
 let retryBtn;
 let emptyEl;
-let tableEl;
+let resultsContainerEl;
 let paginationEl;
 
 export function initStatusViews({ onRetry }) {
@@ -12,7 +12,7 @@ export function initStatusViews({ onRetry }) {
   errorMessageEl = document.getElementById('error-message');
   retryBtn = document.getElementById('error-retry-btn');
   emptyEl = document.getElementById('empty-state');
-  tableEl = document.getElementById('product-table');
+  resultsContainerEl = document.getElementById('results-container');
   paginationEl = document.getElementById('pagination');
 
   retryBtn.addEventListener('click', onRetry);
@@ -26,7 +26,7 @@ export function showLoading() {
   loadingEl.classList.remove('is-hidden');
   errorBannerEl.classList.add('is-hidden');
   emptyEl.classList.add('is-hidden');
-  tableEl.classList.add('is-hidden');
+  resultsContainerEl.classList.add('is-hidden');
   paginationEl.classList.add('is-hidden');
 }
 
@@ -35,7 +35,7 @@ export function showError(message) {
   errorMessageEl.textContent = message;
   errorBannerEl.classList.remove('is-hidden');
   emptyEl.classList.add('is-hidden');
-  tableEl.classList.add('is-hidden');
+  resultsContainerEl.classList.add('is-hidden');
   paginationEl.classList.add('is-hidden');
 }
 
@@ -44,6 +44,6 @@ export function showResults(hasItems) {
   errorBannerEl.classList.add('is-hidden');
 
   emptyEl.classList.toggle('is-hidden', hasItems);
-  tableEl.classList.toggle('is-hidden', !hasItems);
+  resultsContainerEl.classList.toggle('is-hidden', !hasItems);
   paginationEl.classList.toggle('is-hidden', !hasItems);
 }

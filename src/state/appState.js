@@ -5,6 +5,7 @@ const state = {
   categories: [],
   filters: { category: '', minPrice: null, maxPrice: null },
   page: 1,
+  view: null,
 };
 
 export function setProducts(products) {
@@ -30,6 +31,14 @@ export function setPage(page) {
 
 export function getPage() {
   return state.page;
+}
+
+export function setView(view) {
+  state.view = view;
+}
+
+export function getView() {
+  return state.view;
 }
 
 function getFilteredProducts() {
