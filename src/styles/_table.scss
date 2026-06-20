@@ -1,0 +1,41 @@
+@use 'variables' as *;
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  overflow: hidden;
+
+  thead {
+    background: $color-primary;
+    color: white;
+  }
+
+  th,
+  td {
+    text-align: left;
+    padding: $space-sm $space-md;
+    white-space: nowrap;
+  }
+}
+
+.product-table__row {
+  border-top: 1px solid $color-border;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background-color: rgba($color-primary, 0.08);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: inset 0 0 0 2px $color-primary;
+  }
+}

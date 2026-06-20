@@ -1,0 +1,52 @@
+@use 'variables' as *;
+
+.filters {
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  padding: $space-md $space-lg;
+}
+
+.filters__form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-lg;
+}
+
+.filters__group {
+  display: flex;
+  flex-direction: column;
+  gap: $space-xs;
+  font-size: $font-size-sm;
+  color: $color-text-muted;
+
+  label {
+    font-weight: 600;
+  }
+
+  select,
+  input {
+    font-size: $font-size-base;
+    padding: $space-xs $space-sm;
+    border: 1px solid $color-border;
+    border-radius: $radius-sm;
+    color: $color-text;
+    background: $color-surface;
+    min-width: 160px;
+
+    &:focus-visible {
+      outline: 2px solid $color-primary;
+      outline-offset: 1px;
+    }
+  }
+}
+
+.filters__group--price {
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+
+  input {
+    min-width: 100px;
+  }
+}

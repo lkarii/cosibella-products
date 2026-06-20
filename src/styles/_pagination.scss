@@ -1,0 +1,48 @@
+@use 'variables' as *;
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  flex-wrap: wrap;
+}
+
+.pagination__nav-btn,
+.pagination__page-btn {
+  padding: $space-xs $space-sm;
+  border: 1px solid $color-border;
+  border-radius: $radius-sm;
+  background: $color-surface;
+  color: $color-text;
+
+  &:hover:not(:disabled) {
+    border-color: $color-primary;
+    color: $color-primary;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.pagination__nav-btn {
+  padding-inline: $space-md;
+}
+
+.pagination__pages {
+  display: flex;
+  gap: $space-xs;
+}
+
+.pagination__page-btn {
+  min-width: 2.25rem;
+  text-align: center;
+
+  &--active {
+    background: $color-primary;
+    border-color: $color-primary;
+    color: white;
+    font-weight: 600;
+  }
+}
