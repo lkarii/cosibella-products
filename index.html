@@ -21,8 +21,21 @@
       <main class="page-main">
         <section id="filters" class="filters" aria-label="Filtry produktów"></section>
 
+        <p id="loading-indicator" class="status status--loading is-hidden" aria-live="polite">
+          Wczytywanie produktów…
+        </p>
+
+        <div id="error-banner" class="status status--error is-hidden" role="alert">
+          <p id="error-message" class="status__message"></p>
+          <button type="button" id="error-retry-btn" class="status__retry-btn">Spróbuj ponownie</button>
+        </div>
+
+        <p id="empty-state" class="status status--empty is-hidden">
+          Brak produktów spełniających wybrane kryteria filtrowania.
+        </p>
+
         <div class="table-wrapper">
-          <table id="product-table" class="product-table">
+          <table id="product-table" class="product-table is-hidden">
             <thead>
               <tr>
                 <th scope="col">Nazwa</th>
@@ -34,8 +47,15 @@
           </table>
         </div>
 
-        <nav id="pagination" class="pagination" aria-label="Paginacja"></nav>
+        <nav id="pagination" class="pagination is-hidden" aria-label="Paginacja"></nav>
       </main>
+
+      <dialog id="product-modal" class="product-modal">
+        <form method="dialog" class="product-modal__close-form">
+          <button type="submit" class="product-modal__close-btn" aria-label="Zamknij">&times;</button>
+        </form>
+        <div id="product-modal-content" class="product-modal__content"></div>
+      </dialog>
     </div>
 
     <script type="module" src="/src/main.js"></script>

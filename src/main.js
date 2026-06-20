@@ -5,19 +5,23 @@ import { parseUrlState, validateCategory, syncUrl, onUrlNavigated } from './stat
 import { renderProductTable } from './views/productTable.js';
 import { mountFilters } from './views/filters.js';
 import { renderPagination } from './views/pagination.js';
+import { initModal, openProductModal } from './views/modal.js';
+import { initStatusViews, showLoading, showError, showResults, setRetryDisabled } from './views/statusViews.js';
 
 const tableBody = document.getElementById('product-table-body');
 const filtersContainer = document.getElementById('filters');
 const paginationContainer = document.getElementById('pagination');
 
 let filtersHandle = null;
+let isFetching = false;
 
 function recomputeAndRender() {
   appState.clampPage();
   const { items, page, totalPages } = appState.getVisiblePage();
 
-  renderProductTable(tableBody, items, () => {});
+  renderProductTable(tableBody, items, openProductModal);
   renderPagination(paginationContainer, { page, totalPages }, handlePageChange);
+  showResults(items.length > 0);
 }
 
 function syncAndRender({ push = false } = {}) {
@@ -56,21 +60,40 @@ function handlePopState() {
 }
 
 async function loadProducts() {
-  const products = await fetchProducts();
-  appState.setProducts(products);
+  if (isFetching) return;
+  isFetching = true;
+  setRetryDisabled(true);
+  showLoading();
 
-  const { filters, page } = parseUrlState();
-  const category = validateCategory(filters.category, appState.getCategories());
-  appState.setFilters({ ...filters, category });
-  appState.setPage(page);
+  try {
+    const products = await fetchProducts();
+    appState.setProducts(products);
 
-  filtersHandle = mountFilters(filtersContainer, appState.getCategories(), appState.getFilters(), {
-    onCategoryChange: handleCategoryChange,
-    onPriceChange: handlePriceChange,
-  });
+    const { filters, page } = parseUrlState();
+    const category = validateCategory(filters.category, appState.getCategories());
+    appState.setFilters({ ...filters, category });
+    appState.setPage(page);
 
-  syncAndRender({ push: false });
+    if (!filtersHandle) {
+      filtersHandle = mountFilters(filtersContainer, appState.getCategories(), appState.getFilters(), {
+        onCategoryChange: handleCategoryChange,
+        onPriceChange: handlePriceChange,
+      });
+    } else {
+      filtersHandle.setValues(appState.getFilters());
+    }
+
+    syncAndRender({ push: false });
+  } catch (error) {
+    console.error('Failed to load products:', error);
+    showError('Nie udało się wczytać produktów. Sprawdź połączenie z internetem i spróbuj ponownie.');
+  } finally {
+    isFetching = false;
+    setRetryDisabled(false);
+  }
 }
 
+initModal();
+initStatusViews({ onRetry: loadProducts });
 onUrlNavigated(handlePopState);
 loadProducts();
