@@ -1,10 +1,12 @@
-export const PAGE_SIZE = 6;
+export const DEFAULT_PAGE_SIZE = 10;
+export const VALID_PAGE_SIZES = [5, 10, 20];
 
 const state = {
   products: [],
   categories: [],
   filters: { category: '', minPrice: null, maxPrice: null },
   page: 1,
+  pageSize: DEFAULT_PAGE_SIZE,
   view: null,
 };
 
@@ -33,6 +35,14 @@ export function getPage() {
   return state.page;
 }
 
+export function setPageSize(pageSize) {
+  state.pageSize = VALID_PAGE_SIZES.includes(pageSize) ? pageSize : DEFAULT_PAGE_SIZE;
+}
+
+export function getPageSize() {
+  return state.pageSize;
+}
+
 export function setView(view) {
   state.view = view;
 }
@@ -52,7 +62,7 @@ function getFilteredProducts() {
 }
 
 export function getTotalPages(itemCount) {
-  return Math.max(1, Math.ceil(itemCount / PAGE_SIZE));
+  return Math.max(1, Math.ceil(itemCount / state.pageSize));
 }
 
 export function clampPage() {
@@ -63,10 +73,10 @@ export function clampPage() {
 export function getVisiblePage() {
   const filtered = getFilteredProducts();
   const totalPages = getTotalPages(filtered.length);
-  const start = (state.page - 1) * PAGE_SIZE;
+  const start = (state.page - 1) * state.pageSize;
 
   return {
-    items: filtered.slice(start, start + PAGE_SIZE),
+    items: filtered.slice(start, start + state.pageSize),
     totalItems: filtered.length,
     totalPages,
     page: state.page,

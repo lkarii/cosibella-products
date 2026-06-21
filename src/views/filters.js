@@ -37,8 +37,8 @@ export function mountFilters(container, categories, initialFilters, handlers) {
 
   categoryGroup.append(categoryLabel, select);
 
-  const priceGroup = document.createElement('div');
-  priceGroup.className = 'filters__group filters__group--price';
+  const minGroup = document.createElement('div');
+  minGroup.className = 'filters__group';
 
   const minLabel = document.createElement('label');
   minLabel.htmlFor = 'min-price-filter';
@@ -52,6 +52,11 @@ export function mountFilters(container, categories, initialFilters, handlers) {
   minInput.placeholder = '0';
   if (initialFilters.minPrice != null) minInput.value = initialFilters.minPrice;
 
+  minGroup.append(minLabel, minInput);
+
+  const maxGroup = document.createElement('div');
+  maxGroup.className = 'filters__group';
+
   const maxLabel = document.createElement('label');
   maxLabel.htmlFor = 'max-price-filter';
   maxLabel.textContent = 'Cena do';
@@ -63,6 +68,8 @@ export function mountFilters(container, categories, initialFilters, handlers) {
   maxInput.step = '0.01';
   maxInput.placeholder = '9999';
   if (initialFilters.maxPrice != null) maxInput.value = initialFilters.maxPrice;
+
+  maxGroup.append(maxLabel, maxInput);
 
   let debounceTimer = null;
   const emitPriceChange = () => {
@@ -80,8 +87,19 @@ export function mountFilters(container, categories, initialFilters, handlers) {
   minInput.addEventListener('input', emitPriceChange);
   maxInput.addEventListener('input', emitPriceChange);
 
-  priceGroup.append(minLabel, minInput, maxLabel, maxInput);
-  form.append(categoryGroup, priceGroup);
+  const clearBtn = document.createElement('button');
+  clearBtn.type = 'button';
+  clearBtn.className = 'filters__clear-btn';
+  clearBtn.textContent = 'Wyczyść filtry';
+  clearBtn.addEventListener('click', () => {
+    clearTimeout(debounceTimer);
+    select.value = '';
+    minInput.value = '';
+    maxInput.value = '';
+    handlers.onClearFilters();
+  });
+
+  form.append(categoryGroup, minGroup, maxGroup, clearBtn);
   container.append(form);
 
   return {

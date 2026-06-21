@@ -11,6 +11,7 @@ import { initStatusViews, showLoading, showError, showResults, setRetryDisabled 
 
 const MOBILE_QUERY = '(max-width: 480px)';
 
+const pageLoader = document.getElementById('page-loader');
 const tableBody = document.getElementById('product-table-body');
 const tableWrapper = document.querySelector('.table-wrapper');
 const galleryContainer = document.getElementById('product-gallery');
@@ -21,6 +22,10 @@ const viewGalleryBtn = document.getElementById('view-gallery-btn');
 
 let filtersHandle = null;
 let isFetching = false;
+
+function hidePageLoader() {
+  pageLoader.classList.add('is-hidden');
+}
 
 function getDefaultView() {
   return window.matchMedia(MOBILE_QUERY).matches ? 'gallery' : 'table';
@@ -57,12 +62,15 @@ function recomputeAndRender() {
   const { items, page, totalPages } = appState.getVisiblePage();
 
   renderActiveView(items);
-  renderPagination(paginationContainer, { page, totalPages }, handlePageChange);
+  renderPagination(paginationContainer, { page, totalPages, pageSize: appState.getPageSize() }, {
+    onPageChange: handlePageChange,
+    onPageSizeChange: handlePageSizeChange,
+  });
   showResults(items.length > 0);
 }
 
 function syncAndRender({ push = false } = {}) {
-  syncUrl(appState.getFilters(), appState.getPage(), appState.getView(), { push });
+  syncUrl(appState.getFilters(), appState.getPage(), appState.getPageSize(), appState.getView(), { push });
   recomputeAndRender();
 }
 
@@ -74,6 +82,18 @@ function handleCategoryChange(category) {
 
 function handlePriceChange({ minPrice, maxPrice }) {
   appState.setFilters({ ...appState.getFilters(), minPrice, maxPrice });
+  appState.setPage(1);
+  syncAndRender({ push: false });
+}
+
+function handleClearFilters() {
+  appState.setFilters({ category: '', minPrice: null, maxPrice: null });
+  appState.setPage(1);
+  syncAndRender({ push: false });
+}
+
+function handlePageSizeChange(pageSize) {
+  appState.setPageSize(pageSize);
   appState.setPage(1);
   syncAndRender({ push: false });
 }
@@ -91,11 +111,12 @@ function handleViewChange(view) {
 function handlePopState() {
   filtersHandle?.clearPendingDebounce();
 
-  const { filters, page, view } = parseUrlState();
+  const { filters, page, pageSize, view } = parseUrlState();
   const category = validateCategory(filters.category, appState.getCategories());
 
   appState.setFilters({ ...filters, category });
   appState.setPage(page);
+  appState.setPageSize(pageSize);
   appState.setView(view);
   filtersHandle?.setValues(appState.getFilters());
 
@@ -112,16 +133,18 @@ async function loadProducts() {
     const products = await fetchProducts();
     appState.setProducts(products);
 
-    const { filters, page, view } = parseUrlState();
+    const { filters, page, pageSize, view } = parseUrlState();
     const category = validateCategory(filters.category, appState.getCategories());
     appState.setFilters({ ...filters, category });
     appState.setPage(page);
+    appState.setPageSize(pageSize);
     appState.setView(view);
 
     if (!filtersHandle) {
       filtersHandle = mountFilters(filtersContainer, appState.getCategories(), appState.getFilters(), {
         onCategoryChange: handleCategoryChange,
         onPriceChange: handlePriceChange,
+        onClearFilters: handleClearFilters,
       });
     } else {
       filtersHandle.setValues(appState.getFilters());
@@ -142,4 +165,4 @@ initStatusViews({ onRetry: loadProducts });
 onUrlNavigated(handlePopState);
 viewTableBtn.addEventListener('click', () => handleViewChange('table'));
 viewGalleryBtn.addEventListener('click', () => handleViewChange('gallery'));
-loadProducts();
+loadProducts().finally(hidePageLoader);
