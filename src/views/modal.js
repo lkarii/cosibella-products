@@ -1,6 +1,8 @@
 import { formatPrice, formatStock } from '../utils/format.js';
+import { PLACEHOLDER_ICON } from './placeholderIcon.js';
 
 const FIELD_LABELS = {
+  id: 'ID',
   category: 'Kategoria',
   price: 'Cena',
   stock: 'Dostępność',
@@ -8,7 +10,7 @@ const FIELD_LABELS = {
   description: 'Opis',
 };
 
-const KNOWN_FIELD_ORDER = ['category', 'price', 'stock', 'tags', 'description'];
+const KNOWN_FIELD_ORDER = ['id', 'category', 'price', 'stock', 'tags', 'description'];
 
 let dialogEl = null;
 let contentEl = null;
@@ -69,15 +71,25 @@ export function openProductModal(product, trigger) {
   triggerElement = trigger || null;
   contentEl.innerHTML = '';
 
+  const layout = document.createElement('div');
+  layout.className = 'product-modal__layout';
+
+  const thumb = document.createElement('div');
+  thumb.className = 'product-modal__thumb';
+  thumb.innerHTML = PLACEHOLDER_ICON;
+
+  const details = document.createElement('div');
+  details.className = 'product-modal__details';
+
   const title = document.createElement('h2');
   title.className = 'product-modal__title';
   title.textContent = product.name;
-  contentEl.append(title);
+  details.append(title);
 
   const fieldsList = document.createElement('dl');
   fieldsList.className = 'product-modal__fields';
 
-  const renderedKeys = new Set(['name', 'id']);
+  const renderedKeys = new Set(['name']);
   KNOWN_FIELD_ORDER.forEach((key) => {
     if (key in product) {
       fieldsList.append(renderField(key, product[key]));
@@ -91,6 +103,8 @@ export function openProductModal(product, trigger) {
     }
   });
 
-  contentEl.append(fieldsList);
+  details.append(fieldsList);
+  layout.append(thumb, details);
+  contentEl.append(layout);
   dialogEl.showModal();
 }

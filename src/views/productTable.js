@@ -23,6 +23,7 @@ export function renderProductTable(tbody, products, onOpenProduct) {
     row.tabIndex = 0;
 
     row.append(
+      createCell(product.id),
       createCell(product.name),
       createCell(product.category),
       createCell(formatPrice(product.price)),

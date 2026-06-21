@@ -4,13 +4,42 @@
   border: none;
   border-radius: $radius-md;
   padding: $space-lg $space-xl;
-  max-width: 560px;
+  max-width: 640px;
   width: calc(100% - #{$space-lg * 2});
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
 
   &::backdrop {
     background: rgba(0, 0, 0, 0.5);
   }
+}
+
+.product-modal__layout {
+  display: flex;
+  gap: $space-lg;
+}
+
+.product-modal__thumb {
+  flex-shrink: 0;
+  align-self: flex-start;
+  width: 140px;
+  aspect-ratio: 4 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  background: $color-bg;
+  color: $color-border;
+
+  svg {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}
+
+.product-modal__details {
+  flex: 1;
+  min-width: 0;
 }
 
 .product-modal__close-form {
@@ -81,6 +110,14 @@
 }
 
 @media (max-width: $breakpoint-mobile) {
+  .product-modal__layout {
+    flex-direction: column;
+  }
+
+  .product-modal__thumb {
+    width: 100%;
+  }
+
   .product-modal__field {
     grid-template-columns: 1fr;
     gap: $space-xs;
