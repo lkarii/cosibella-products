@@ -53,7 +53,7 @@ function renderField(key, value) {
   } else if (Array.isArray(value)) {
     value.forEach((entry) => {
       const chip = document.createElement('span');
-      chip.className = 'product-modal__tag';
+      chip.className = 'tag-chip';
       chip.textContent = entry;
       valueEl.append(chip);
     });

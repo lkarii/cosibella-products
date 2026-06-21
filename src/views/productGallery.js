@@ -31,6 +31,18 @@ export function renderProductGallery(container, products, onOpenProduct) {
     body.className = 'product-card__body';
     body.append(categoryEl, nameEl, priceEl);
 
+    if (Array.isArray(product.tags) && product.tags.length > 0) {
+      const tagsEl = document.createElement('div');
+      tagsEl.className = 'tags-list';
+      product.tags.forEach((tag) => {
+        const chip = document.createElement('span');
+        chip.className = 'tag-chip';
+        chip.textContent = tag;
+        tagsEl.append(chip);
+      });
+      body.append(tagsEl);
+    }
+
     card.append(thumb, body);
 
     const open = () => onOpenProduct(product, card);

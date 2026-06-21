@@ -1,0 +1,16 @@
+@use 'variables' as *;
+
+.tags-list {
+  margin: 0;
+}
+
+.tag-chip {
+  display: inline-block;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 0.15rem $space-sm;
+  margin: 0 $space-xs $space-xs 0;
+  font-size: $font-size-sm;
+  color: var(--color-text-muted);
+}
