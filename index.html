@@ -8,6 +8,15 @@
       href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2213%22 font-size=%2214%22>🛒</text></svg>"
     />
     <title>Cosibella Products — katalog produktów</title>
+    <script>
+      (function () {
+        var stored = localStorage.getItem('cosibella-theme');
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (stored === 'dark' || (!stored && prefersDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
     <style>
       #page-loader {
         position: fixed;
@@ -34,6 +43,13 @@
           transform: rotate(360deg);
         }
       }
+      html[data-theme='dark'] #page-loader {
+        background: #16161b;
+      }
+      html[data-theme='dark'] #page-loader .page-loader__spinner {
+        border-color: #35353f;
+        border-top-color: #e3a89c;
+      }
     </style>
   </head>
   <body>
@@ -47,6 +63,7 @@
     <div id="app">
       <header class="page-header">
         <img src="/src/img/logo_1_big.png" alt="Cosibella" class="page-header__logo" width="181" height="32" />
+        <button type="button" id="theme-toggle-btn" class="theme-toggle" aria-label="Przełącz motyw"></button>
       </header>
 
       <main class="page-main">

@@ -6,6 +6,8 @@
   padding: $space-lg $space-xl;
   max-width: 640px;
   width: calc(100% - #{$space-lg * 2});
+  background: var(--color-surface);
+  color: var(--color-text);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
 
   &::backdrop {
@@ -26,10 +28,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid $color-border;
+  border: 1px solid var(--color-border);
   border-radius: $radius-md;
-  background: $color-bg;
-  color: $color-border;
+  background: var(--color-bg);
+  color: var(--color-border);
 
   svg {
     width: 2.5rem;
@@ -52,16 +54,16 @@
   background: transparent;
   font-size: $font-size-xl;
   line-height: 1;
-  color: $color-text-muted;
+  color: var(--color-text-muted);
 
   &:hover {
-    color: $color-text;
+    color: var(--color-text);
   }
 }
 
 .product-modal__title {
   margin: 0 0 $space-md;
-  color: $color-primary-dark;
+  color: var(--color-primary-dark);
 }
 
 .product-modal__fields {
@@ -73,7 +75,7 @@
   grid-template-columns: 140px 1fr;
   gap: $space-sm;
   padding: $space-sm 0;
-  border-top: 1px solid $color-border;
+  border-top: 1px solid var(--color-border);
 
   &:first-child {
     border-top: none;
@@ -82,7 +84,7 @@
 
 .product-modal__field-label {
   font-weight: 600;
-  color: $color-text-muted;
+  color: var(--color-text-muted);
 }
 
 .product-modal__field-value {
@@ -91,8 +93,8 @@
 
 .product-modal__tag {
   display: inline-block;
-  background: $color-bg;
-  border: 1px solid $color-border;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
   border-radius: 999px;
   padding: 0.15rem $space-sm;
   margin: 0 $space-xs $space-xs 0;
@@ -100,12 +102,12 @@
 }
 
 .product-modal__stock--in {
-  color: $color-success;
+  color: var(--color-success);
   font-weight: 600;
 }
 
 .product-modal__stock--out {
-  color: $color-danger;
+  color: var(--color-danger);
   font-weight: 600;
 }
 

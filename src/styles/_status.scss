@@ -9,7 +9,7 @@
   display: flex;
   align-items: center;
   gap: $space-sm;
-  color: $color-text-muted;
+  color: var(--color-text-muted);
   font-style: italic;
 
   &::before {
@@ -17,8 +17,8 @@
     width: 1rem;
     height: 1rem;
     flex-shrink: 0;
-    border: 2px solid $color-border;
-    border-top-color: $color-primary;
+    border: 2px solid var(--color-border);
+    border-top-color: var(--color-primary-dark);
     border-radius: 50%;
     animation: status-spin 0.8s linear infinite;
   }
@@ -37,8 +37,8 @@
 }
 
 .status--error {
-  background: $color-danger-bg;
-  color: $color-danger;
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -47,23 +47,23 @@
 }
 
 .status--empty {
-  background: $color-bg;
-  border: 1px dashed $color-border;
-  color: $color-text-muted;
+  background: var(--color-bg);
+  border: 1px dashed var(--color-border);
+  color: var(--color-text-muted);
   text-align: center;
 }
 
 .status__retry-btn {
-  border: 1px solid $color-danger;
-  background: $color-surface;
-  color: $color-danger;
+  border: 1px solid var(--color-danger);
+  background: var(--color-surface);
+  color: var(--color-danger);
   padding: $space-xs $space-md;
   border-radius: $radius-sm;
   white-space: nowrap;
 
   &:hover:not(:disabled) {
-    background: $color-danger;
-    color: white;
+    background: var(--color-danger);
+    color: var(--color-surface);
   }
 
   &:disabled {

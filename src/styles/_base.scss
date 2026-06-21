@@ -1,5 +1,39 @@
 @use 'variables' as *;
 
+:root {
+  --color-bg: #f7f7f9;
+  --color-surface: #ffffff;
+  --color-border: #e0e0e6;
+  --color-text: #1f2230;
+  --color-text-muted: #6b6f80;
+  --color-primary: rgba(249, 216, 211, 0.8);
+  --color-primary-dark: #8a4f49;
+  --color-danger: #b3261e;
+  --color-danger-bg: #fdecea;
+  --color-success: #2e7d32;
+  --color-success-bg: #e9f6ea;
+  --color-footer-bg: #111114;
+  --row-hover-bg: rgba(249, 216, 211, 0.18);
+  --logo-filter: none;
+}
+
+:root[data-theme='dark'] {
+  --color-bg: #16161b;
+  --color-surface: #1f1f26;
+  --color-border: #35353f;
+  --color-text: #e9e9ee;
+  --color-text-muted: #9a9aa8;
+  --color-primary: rgba(154, 99, 88, 0.45);
+  --color-primary-dark: #e3a89c;
+  --color-danger: #ff6b61;
+  --color-danger-bg: rgba(255, 107, 97, 0.15);
+  --color-success: #6fcf73;
+  --color-success-bg: rgba(111, 207, 115, 0.15);
+  --color-footer-bg: #0a0a0c;
+  --row-hover-bg: rgba(154, 99, 88, 0.18);
+  --logo-filter: invert(1);
+}
+
 *,
 *::before,
 *::after {
@@ -18,9 +52,10 @@ body {
   flex-direction: column;
   font-family: $font-family-base;
   font-size: $font-size-base;
-  color: $color-text;
-  background: $color-bg;
+  color: var(--color-text);
+  background: var(--color-bg);
   line-height: 1.5;
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 h1,

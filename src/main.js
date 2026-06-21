@@ -8,10 +8,12 @@ import { mountFilters } from './views/filters.js';
 import { renderPagination } from './views/pagination.js';
 import { initModal, openProductModal } from './views/modal.js';
 import { initStatusViews, showLoading, showError, showResults, setRetryDisabled } from './views/statusViews.js';
+import { initThemeToggle } from './views/theme.js';
 
 const MOBILE_QUERY = '(max-width: 480px)';
 
 const pageLoader = document.getElementById('page-loader');
+const themeToggleBtn = document.getElementById('theme-toggle-btn');
 const tableBody = document.getElementById('product-table-body');
 const tableWrapper = document.querySelector('.table-wrapper');
 const galleryContainer = document.getElementById('product-gallery');
@@ -70,7 +72,14 @@ function recomputeAndRender() {
 }
 
 function syncAndRender({ push = false } = {}) {
-  syncUrl(appState.getFilters(), appState.getPage(), appState.getPageSize(), appState.getView(), { push });
+  syncUrl(
+    appState.getFilters(),
+    appState.getPage(),
+    appState.getPageSize(),
+    appState.getSort(),
+    appState.getView(),
+    { push }
+  );
   recomputeAndRender();
 }
 
@@ -86,14 +95,26 @@ function handlePriceChange({ minPrice, maxPrice }) {
   syncAndRender({ push: false });
 }
 
+function handleSearchChange(search) {
+  appState.setFilters({ ...appState.getFilters(), search });
+  appState.setPage(1);
+  syncAndRender({ push: false });
+}
+
 function handleClearFilters() {
-  appState.setFilters({ category: '', minPrice: null, maxPrice: null });
+  appState.setFilters({ category: '', minPrice: null, maxPrice: null, search: '' });
   appState.setPage(1);
   syncAndRender({ push: false });
 }
 
 function handlePageSizeChange(pageSize) {
   appState.setPageSize(pageSize);
+  appState.setPage(1);
+  syncAndRender({ push: false });
+}
+
+function handleSortChange(sort) {
+  appState.setSort(sort);
   appState.setPage(1);
   syncAndRender({ push: false });
 }
@@ -111,14 +132,16 @@ function handleViewChange(view) {
 function handlePopState() {
   filtersHandle?.clearPendingDebounce();
 
-  const { filters, page, pageSize, view } = parseUrlState();
+  const { filters, page, pageSize, sort, view } = parseUrlState();
   const category = validateCategory(filters.category, appState.getCategories());
 
   appState.setFilters({ ...filters, category });
   appState.setPage(page);
   appState.setPageSize(pageSize);
+  appState.setSort(sort);
   appState.setView(view);
   filtersHandle?.setValues(appState.getFilters());
+  filtersHandle?.setSort(appState.getSort());
 
   recomputeAndRender();
 }
@@ -133,21 +156,25 @@ async function loadProducts() {
     const products = await fetchProducts();
     appState.setProducts(products);
 
-    const { filters, page, pageSize, view } = parseUrlState();
+    const { filters, page, pageSize, sort, view } = parseUrlState();
     const category = validateCategory(filters.category, appState.getCategories());
     appState.setFilters({ ...filters, category });
     appState.setPage(page);
     appState.setPageSize(pageSize);
+    appState.setSort(sort);
     appState.setView(view);
 
     if (!filtersHandle) {
-      filtersHandle = mountFilters(filtersContainer, appState.getCategories(), appState.getFilters(), {
+      filtersHandle = mountFilters(filtersContainer, appState.getCategories(), appState.getFilters(), appState.getSort(), {
         onCategoryChange: handleCategoryChange,
         onPriceChange: handlePriceChange,
+        onSearchChange: handleSearchChange,
         onClearFilters: handleClearFilters,
+        onSortChange: handleSortChange,
       });
     } else {
       filtersHandle.setValues(appState.getFilters());
+      filtersHandle.setSort(appState.getSort());
     }
 
     syncAndRender({ push: false });
@@ -162,6 +189,7 @@ async function loadProducts() {
 
 initModal();
 initStatusViews({ onRetry: loadProducts });
+initThemeToggle(themeToggleBtn);
 onUrlNavigated(handlePopState);
 viewTableBtn.addEventListener('click', () => handleViewChange('table'));
 viewGalleryBtn.addEventListener('click', () => handleViewChange('gallery'));

@@ -9,7 +9,7 @@
   padding: 0;
   border: none;
   background: none;
-  color: $color-text-muted;
+  color: var(--color-text-muted);
 
   svg {
     width: 1.15rem;
@@ -17,6 +17,6 @@
   }
 
   &:hover {
-    color: $color-primary-dark;
+    color: var(--color-primary-dark);
   }
 }

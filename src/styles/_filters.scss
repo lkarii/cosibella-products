@@ -5,12 +5,12 @@
   justify-content: space-between;
   align-items: flex-end;
   gap: $space-md;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .view-toggle {
   display: flex;
-  border: 1px solid $color-border;
+  border: 1px solid var(--color-border);
   border-radius: $radius-sm;
   overflow: hidden;
   flex-shrink: 0;
@@ -23,9 +23,9 @@
   width: 2.25rem;
   height: 2.25rem;
   border: none;
-  border-right: 1px solid $color-border;
-  background: $color-surface;
-  color: $color-text-muted;
+  border-right: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
 
   &:last-child {
     border-right: none;
@@ -37,83 +37,125 @@
   }
 
   &:hover {
-    color: $color-primary-dark;
+    color: var(--color-primary-dark);
   }
 
   &--active {
-    background: $color-primary;
-    color: $color-primary-dark;
+    background: var(--color-primary);
+    color: var(--color-primary-dark);
 
     &:hover {
-      background: $color-primary-dark;
-      color: white;
+      background: var(--color-primary-dark);
+      color: var(--color-surface);
     }
   }
 }
 
 .filters {
   flex: 1;
+  min-width: 0;
 }
 
 .filters__form {
   display: flex;
-  flex-wrap: wrap;
-  gap: $space-lg;
+  flex-wrap: nowrap;
+  gap: $space-sm;
 }
 
 .filters__group {
   display: flex;
   flex-direction: column;
+  flex-shrink: 1;
+  min-width: 0;
   gap: $space-xs;
   font-size: $font-size-sm;
-  color: $color-text-muted;
+  color: var(--color-text-muted);
 
   label {
     font-weight: 600;
+    white-space: nowrap;
   }
 
   select,
   input {
-    font-size: $font-size-base;
-    padding: $space-xs $space-sm;
-    border: 1px solid $color-border;
+    width: 100%;
+    font-size: $font-size-sm;
+    padding: $space-xs;
+    border: 1px solid var(--color-border);
     border-radius: $radius-sm;
-    color: $color-text;
-    background: $color-surface;
-    min-width: 160px;
+    color: var(--color-text);
+    background: var(--color-surface);
+    min-width: 0;
     height: 2.25rem;
 
     &:focus-visible {
-      outline: 2px solid $color-primary-dark;
+      outline: 2px solid var(--color-primary-dark);
       outline-offset: 1px;
     }
   }
 
   input[type='number'] {
-    min-width: 100px;
+    width: 5.5rem;
   }
 }
 
 .filters__clear-btn {
+  flex-shrink: 0;
   align-self: flex-end;
   height: 2.25rem;
-  padding: 0 $space-md;
-  border: 1px solid $color-border;
+  padding: 0 $space-sm;
+  border: 1px solid var(--color-border);
   border-radius: $radius-sm;
-  background: $color-surface;
-  color: $color-text-muted;
+  background: var(--color-surface);
+  color: var(--color-text-muted);
   font-size: $font-size-sm;
   white-space: nowrap;
 
   &:hover {
-    border-color: $color-primary-dark;
-    color: $color-primary-dark;
+    border-color: var(--color-primary-dark);
+    color: var(--color-primary-dark);
+  }
+}
+
+@media (max-width: $breakpoint-tablet) {
+  .toolbar {
+    flex-wrap: wrap;
+  }
+
+  .filters__form {
+    flex-wrap: wrap;
+  }
+
+  .filters__group {
+    flex: 1 1 120px;
   }
 }
 
 @media (max-width: $breakpoint-mobile) {
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .view-toggle {
+    align-self: flex-start;
+  }
+
   .filters__form {
     flex-direction: column;
     align-items: stretch;
+    gap: $space-sm;
+  }
+
+  .filters__group {
+    flex: none;
+  }
+
+  .filters__group input[type='number'] {
+    width: 100%;
+  }
+
+  .filters__clear-btn {
+    align-self: stretch;
   }
 }

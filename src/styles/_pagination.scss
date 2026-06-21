@@ -13,18 +13,18 @@
   align-items: center;
   gap: $space-xs;
   font-size: $font-size-sm;
-  color: $color-text-muted;
+  color: var(--color-text-muted);
 
   select {
     font-size: $font-size-sm;
     padding: $space-xs;
-    border: 1px solid $color-border;
+    border: 1px solid var(--color-border);
     border-radius: $radius-sm;
-    color: $color-text;
-    background: $color-surface;
+    color: var(--color-text);
+    background: var(--color-surface);
 
     &:focus-visible {
-      outline: 2px solid $color-primary-dark;
+      outline: 2px solid var(--color-primary-dark);
       outline-offset: 1px;
     }
   }
@@ -41,11 +41,11 @@
   background: none;
   font-size: $font-size-lg;
   line-height: 1;
-  color: $color-text;
+  color: var(--color-text);
   padding: $space-xs;
 
   &:hover:not(:disabled) {
-    color: $color-primary-dark;
+    color: var(--color-primary-dark);
   }
 
   &:disabled {
@@ -63,18 +63,18 @@
 .pagination__page-btn {
   border: 1px solid transparent;
   background: none;
-  color: $color-text;
+  color: var(--color-text);
   min-width: 1.75rem;
   height: 1.75rem;
   border-radius: 50%;
 
   &:hover {
-    color: $color-primary-dark;
+    color: var(--color-primary-dark);
   }
 
   &--active {
-    border-color: $color-primary-dark;
-    color: $color-primary-dark;
+    border-color: var(--color-primary-dark);
+    color: var(--color-primary-dark);
     font-weight: 600;
   }
 }
