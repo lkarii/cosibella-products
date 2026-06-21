@@ -14,7 +14,7 @@
 
   thead {
     background: $color-primary;
-    color: white;
+    color: $color-primary-dark;
   }
 
   th,
@@ -23,6 +23,10 @@
     padding: $space-sm $space-md;
     white-space: nowrap;
   }
+}
+
+.product-table__action-cell {
+  text-align: right;
 }
 
 .product-table__row {
@@ -36,7 +40,7 @@
 
   &:focus-visible {
     outline: none;
-    box-shadow: inset 0 0 0 2px $color-primary;
+    box-shadow: inset 0 0 0 2px $color-primary-dark;
   }
 }
 
