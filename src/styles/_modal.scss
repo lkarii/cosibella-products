@@ -79,3 +79,10 @@
   color: $color-danger;
   font-weight: 600;
 }
+
+@media (max-width: $breakpoint-mobile) {
+  .product-modal__field {
+    grid-template-columns: 1fr;
+    gap: $space-xs;
+  }
+}

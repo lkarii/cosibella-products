@@ -25,3 +25,13 @@
   flex-direction: column;
   gap: $space-lg;
 }
+
+@media (max-width: $breakpoint-mobile) {
+  #app {
+    padding: $space-md $space-sm $space-lg;
+  }
+
+  .page-header__title {
+    font-size: $font-size-lg;
+  }
+}

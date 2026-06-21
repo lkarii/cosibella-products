@@ -39,3 +39,14 @@
     box-shadow: inset 0 0 0 2px $color-primary;
   }
 }
+
+@media (max-width: $breakpoint-mobile) {
+  .product-table {
+    font-size: $font-size-sm;
+  }
+
+  th,
+  td {
+    padding: $space-xs $space-sm;
+  }
+}
