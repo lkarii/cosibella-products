@@ -10,9 +10,12 @@ html,
 body {
   margin: 0;
   padding: 0;
+  height: 100%;
 }
 
 body {
+  display: flex;
+  flex-direction: column;
   font-family: $font-family-base;
   font-size: $font-size-base;
   color: $color-text;
@@ -33,4 +36,13 @@ button {
 
 .is-hidden {
   display: none !important;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
 }

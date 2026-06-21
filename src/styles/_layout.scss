@@ -1,6 +1,8 @@
 @use 'variables' as *;
 
 #app {
+  flex: 1 0 auto;
+  width: 100%;
   max-width: $max-content-width;
   margin: 0 auto;
   padding: $space-lg $space-md $space-xl;
@@ -8,16 +10,12 @@
 
 .page-header {
   margin-bottom: $space-lg;
+}
 
-  &__title {
-    font-size: $font-size-xl;
-    color: $color-primary-dark;
-  }
-
-  &__subtitle {
-    margin: $space-xs 0 0;
-    color: $color-text-muted;
-  }
+.page-header__logo {
+  display: block;
+  height: 32px;
+  width: auto;
 }
 
 .page-main {
@@ -26,12 +24,44 @@
   gap: $space-lg;
 }
 
+.page-footer {
+  flex-shrink: 0;
+  background: $color-footer-bg;
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: $space-xl;
+}
+
+.page-footer__inner {
+  max-width: $max-content-width;
+  margin: 0 auto;
+  padding: $space-lg $space-md;
+  display: flex;
+  justify-content: space-between;
+  gap: $space-lg;
+  flex-wrap: wrap;
+}
+
+.page-footer__heading {
+  margin: 0 0 $space-xs;
+  font-weight: 600;
+  color: white;
+}
+
+.page-footer__col p {
+  margin: 0;
+  font-size: $font-size-sm;
+}
+
+.page-footer a {
+  color: white;
+}
+
 @media (max-width: $breakpoint-mobile) {
   #app {
     padding: $space-md $space-sm $space-lg;
   }
 
-  .page-header__title {
-    font-size: $font-size-lg;
+  .page-header__logo {
+    height: 24px;
   }
 }
