@@ -1,0 +1,22 @@
+@use 'variables' as *;
+
+.stock-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  border: none;
+  background: none;
+  color: $color-text-muted;
+
+  svg {
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+
+  &:hover {
+    color: $color-primary-dark;
+  }
+}

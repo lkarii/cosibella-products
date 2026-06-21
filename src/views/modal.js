@@ -1,7 +1,6 @@
 import { formatPrice, formatStock } from '../utils/format.js';
 
 const FIELD_LABELS = {
-  id: 'ID',
   category: 'Kategoria',
   price: 'Cena',
   stock: 'Dostępność',
@@ -9,7 +8,7 @@ const FIELD_LABELS = {
   description: 'Opis',
 };
 
-const KNOWN_FIELD_ORDER = ['id', 'category', 'price', 'stock', 'tags', 'description'];
+const KNOWN_FIELD_ORDER = ['category', 'price', 'stock', 'tags', 'description'];
 
 let dialogEl = null;
 let contentEl = null;
@@ -78,7 +77,7 @@ export function openProductModal(product, trigger) {
   const fieldsList = document.createElement('dl');
   fieldsList.className = 'product-modal__fields';
 
-  const renderedKeys = new Set(['name']);
+  const renderedKeys = new Set(['name', 'id']);
   KNOWN_FIELD_ORDER.forEach((key) => {
     if (key in product) {
       fieldsList.append(renderField(key, product[key]));

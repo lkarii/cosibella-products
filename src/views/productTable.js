@@ -1,8 +1,16 @@
 import { formatPrice } from '../utils/format.js';
+import { createStockAction } from './stockAction.js';
 
 function createCell(text) {
   const td = document.createElement('td');
   td.textContent = text;
+  return td;
+}
+
+function createActionCell(stock) {
+  const td = document.createElement('td');
+  td.className = 'product-table__action-cell';
+  td.append(createStockAction(stock));
   return td;
 }
 
@@ -17,7 +25,8 @@ export function renderProductTable(tbody, products, onOpenProduct) {
     row.append(
       createCell(product.name),
       createCell(product.category),
-      createCell(formatPrice(product.price))
+      createCell(formatPrice(product.price)),
+      createActionCell(product.stock)
     );
 
     const open = () => onOpenProduct(product, row);

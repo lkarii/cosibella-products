@@ -1,5 +1,5 @@
 import { formatPrice } from '../utils/format.js';
-import { getCategoryColors } from '../utils/categoryColor.js';
+import { createStockAction } from './stockAction.js';
 
 const PLACEHOLDER_ICON = `
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
@@ -20,10 +20,8 @@ export function renderProductGallery(container, products, onOpenProduct) {
 
     const thumb = document.createElement('div');
     thumb.className = 'product-card__thumb';
-    const colors = getCategoryColors(product.category);
-    thumb.style.backgroundColor = colors.bg;
-    thumb.style.color = colors.fg;
     thumb.innerHTML = PLACEHOLDER_ICON;
+    thumb.append(createStockAction(product.stock));
 
     const categoryEl = document.createElement('p');
     categoryEl.className = 'product-card__category';
