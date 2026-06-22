@@ -1,57 +1,52 @@
 import { formatPrice } from '../utils/format.js';
 import { createStockAction } from './stockAction.js';
 
-function createCell(text) {
-  const td = document.createElement('td');
-  td.textContent = text;
-  return td;
-}
+function createTags(product) {
+  const tagsEl = document.createElement('div');
+  tagsEl.className = 'product-row__tags tags-list';
 
-function createNameCell(product) {
-  const td = document.createElement('td');
-
-  const nameEl = document.createElement('div');
-  nameEl.className = 'product-table__name';
-  nameEl.textContent = product.name;
-  td.append(nameEl);
-
-  if (Array.isArray(product.tags) && product.tags.length > 0) {
-    const tagsEl = document.createElement('div');
-    tagsEl.className = 'tags-list';
+  if (Array.isArray(product.tags)) {
     product.tags.forEach((tag) => {
       const chip = document.createElement('span');
       chip.className = 'tag-chip';
       chip.textContent = tag;
       tagsEl.append(chip);
     });
-    td.append(tagsEl);
   }
 
-  return td;
+  return tagsEl;
 }
 
-function createActionCell(stock) {
-  const td = document.createElement('td');
-  td.className = 'product-table__action-cell';
-  td.append(createStockAction(stock));
-  return td;
-}
-
-export function renderProductTable(tbody, products, onOpenProduct) {
-  tbody.innerHTML = '';
+export function renderProductTable(container, products, onOpenProduct) {
+  container.innerHTML = '';
 
   products.forEach((product) => {
-    const row = document.createElement('tr');
-    row.className = 'product-table__row';
+    const row = document.createElement('div');
+    row.className = 'product-row';
     row.tabIndex = 0;
 
-    row.append(
-      createCell(product.id),
-      createNameCell(product),
-      createCell(product.category),
-      createCell(formatPrice(product.price)),
-      createActionCell(product.stock)
-    );
+    const idEl = document.createElement('span');
+    idEl.className = 'product-row__id';
+    idEl.textContent = product.id;
+
+    const identity = document.createElement('div');
+    identity.className = 'product-row__identity';
+
+    const categoryEl = document.createElement('p');
+    categoryEl.className = 'product-row__category';
+    categoryEl.textContent = product.category;
+
+    const nameEl = document.createElement('p');
+    nameEl.className = 'product-row__name';
+    nameEl.textContent = product.name;
+
+    identity.append(categoryEl, nameEl);
+
+    const priceEl = document.createElement('span');
+    priceEl.className = 'product-row__price';
+    priceEl.textContent = formatPrice(product.price);
+
+    row.append(idEl, identity, createTags(product), priceEl, createStockAction(product.stock));
 
     const open = () => onOpenProduct(product, row);
     row.addEventListener('click', open);
@@ -62,6 +57,6 @@ export function renderProductTable(tbody, products, onOpenProduct) {
       }
     });
 
-    tbody.append(row);
+    container.append(row);
   });
 }
